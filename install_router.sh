@@ -7,8 +7,8 @@ DHCP_RANGE_NETMASK=255.255.255.0
 DHCP_RANGE_LEASE=1h
 
 # Install dnsmasq
-#sudo apt update
-#sudo apt install dnsmasq -y
+sudo apt update
+sudo apt install dnsmasq -y
 
 # Do dnsmasq settings
 sudo echo interface=eth0 >> /etc/dnsmasq.conf
