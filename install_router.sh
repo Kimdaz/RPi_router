@@ -5,6 +5,8 @@ DHCP_RANGE_START=192.168.8.2
 DHCP_RANGE_END=192.168.8.200
 DHCP_RANGE_NETMASK=255.255.255.0
 DHCP_RANGE_LEASE=1h
+INTERNET_DEVICE=usb0
+INTRANET_DEVICE=eth0
 
 # Install dnsmasq
 sudo apt update
@@ -17,6 +19,10 @@ sudo echo domain-needed >> /etc/dnsmasq.conf
 sudo echo bogus-priv >> /etc/dnsmasq.conf
 sudo echo dhcp-range=$DHCP_RANGE_START,$DHCP_RANGE_END,$DHCP_RANGE_NETMASK,$DHCP_RANGE_LEASE >> /etc/dnsmasq.conf
 
+# Enable routing
+sudo sed -i 's/^net.ipv4.ip_forward=0/net.ipv4.ip_forward=1/' "/etc/sysctl.conf"
+sudo sysctl -p
+
 # Install iptables
 sudo apt install iptables -y
 
@@ -24,9 +30,9 @@ sudo apt install iptables -y
 sudo iptables -F
 
 # Create route
-sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-sudo iptables -A FORWARD -i eth0 -o usb0 -j ACCEPT
-sudo iptables -A FORWARD -i usb0 -o eth0 -j ACCEPT
+sudo iptables -t nat -A POSTROUTING -o $INTRANET_DEVICE -j MASQUERADE
+sudo iptables -A FORWARD -i $INTRANET_DEVICE -o $INTERNET_DEVICE -j ACCEPT
+sudo iptables -A FORWARD -i $INTERNET_DEVICE -o $INTRANET_DEVICE -j ACCEPT
 sudo iptables-apply
 
 # Save iptables 
