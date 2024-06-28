@@ -1,3 +1,5 @@
+Currently not working as it should.
+
 # Bash Script Documentation
 
 ## Overview
