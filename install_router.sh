@@ -8,6 +8,14 @@ DHCP_RANGE_LEASE=1h
 INTERNET_DEVICE=usb0
 INTRANET_DEVICE=eth0
 
+# Set static ip address
+sudo nmcli con modify 'Wired connection 1' ipv4.addresses $LOCAL_IP
+sudo nmcli con modify 'Wired connection 1' ipv4.method manual
+sudo nmcli con modify 'Wired connection 1' ipv4.dns "1.1.1.1,1.0.0.1"
+
+sudo nmcli con down 'Wired connection 1'
+sudo nmcli con up 'Wired connection 1'
+
 # Install dnsmasq
 sudo apt update
 sudo apt install dnsmasq -y
@@ -38,12 +46,3 @@ sudo iptables-apply
 # Save iptables 
 sudo sh -c "iptables-save > /etc/network/iptables.up.rules" 
 sudo echo "iptables-restore < /etc/network/iptables.up.rules" >> /etc/rc.local
-
-# Set static ip address
-sudo nmcli con modify 'Wired connection 1' ipv4.addresses $LOCAL_IP
-sudo nmcli con modify 'Wired connection 1' ipv4.method manual
-sudo nmcli con modify 'Wired connection 1' ipv4.dns "1.1.1.1,1.0.0.1"
-
-sudo nmcli con down 'Wired connection 1'
-sudo nmcli con up 'Wired connection 1'
-
