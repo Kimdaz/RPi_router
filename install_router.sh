@@ -20,7 +20,7 @@ sudo echo bogus-priv >> /etc/dnsmasq.conf
 sudo echo dhcp-range=$DHCP_RANGE_START,$DHCP_RANGE_END,$DHCP_RANGE_NETMASK,$DHCP_RANGE_LEASE >> /etc/dnsmasq.conf
 
 # Enable routing
-sudo sed -i 's/^net.ipv4.ip_forward=0/net.ipv4.ip_forward=1/' "/etc/sysctl.conf"
+sudo sed -i 's/^#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' "/etc/sysctl.conf"
 sudo sysctl -p
 
 # Install iptables
