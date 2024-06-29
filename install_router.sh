@@ -22,7 +22,8 @@ sudo apt install dnsmasq -y
 
 # Do dnsmasq settings
 sudo echo interface=eth0 >> /etc/dnsmasq.conf
-sudo echo bind-dynamic >> /etc/dnsmasq.conf
+sudo echo listen-address=$LOCAL_IP >> /etc/dnsmasq.conf
+sudo echo bind-interfaces >> /etc/dnsmasq.conf
 sudo echo domain-needed >> /etc/dnsmasq.conf
 sudo echo bogus-priv >> /etc/dnsmasq.conf
 sudo echo dhcp-range=$DHCP_RANGE_START,$DHCP_RANGE_END,$DHCP_RANGE_NETMASK,$DHCP_RANGE_LEASE >> /etc/dnsmasq.conf
